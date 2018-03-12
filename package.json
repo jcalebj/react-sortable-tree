@@ -57,6 +57,7 @@
     "> 1%"
   ],
   "dependencies": {
+    "lodash.debounce": "^4.0.8",
     "lodash.isequal": "^4.4.0",
     "prop-types": "^15.6.1",
     "react-dnd": "2.5.4",
