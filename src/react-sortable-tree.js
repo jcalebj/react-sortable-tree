@@ -1,7 +1,8 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { AutoSizer, List } from 'react-virtualized';
-import isEqual from 'lodash.isequal';
+import isEqual  from 'lodash.isequal';
+import debounce  from 'lodash.debounce';
 import withScrolling, {
   createVerticalStrength,
   createHorizontalStrength,
@@ -117,6 +118,9 @@ class ReactSortableTree extends Component {
     this.endDrag = this.endDrag.bind(this);
     this.drop = this.drop.bind(this);
     this.handleDndMonitorChange = this.handleDndMonitorChange.bind(this);
+    this.recomputeRowHeightsDebounced = debounce(() => {
+        this.scrollZoneVirtualListComponent.wrappedInstance.recomputeRowHeights();
+      }, 300);
   }
 
   componentDidMount() {
@@ -390,6 +394,8 @@ class ReactSortableTree extends Component {
       searchFocusTreeIndex: null,
       dragging: true,
     });
+
+    this.recomputeRowHeightsDebounced();
   }
 
   endDrag(dropResult) {
